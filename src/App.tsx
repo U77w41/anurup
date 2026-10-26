@@ -3,7 +3,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -43,7 +43,7 @@ const App = () => (
       <Toaster />
       <Sonner position="top-center" richColors closeButton />
       <WorkspaceProvider>
-        <HashRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Suspense fallback={<Fallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -54,7 +54,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-        </HashRouter>
+        </BrowserRouter>
       </WorkspaceProvider>
     </TooltipProvider>
   </ThemeProvider>

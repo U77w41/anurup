@@ -25,7 +25,7 @@ function LockBadge({ file, onUnlocked }: { file: File; onUnlocked: (f: File) => 
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const onUnlockPage = useLocation().pathname === "/pdf-unlock";
+  const onUnlockPage = useLocation().pathname.replace(/\/+$/, "") === "/pdf-unlock";
 
   useEffect(() => {
     let alive = true;
@@ -74,7 +74,7 @@ function LockBadge({ file, onUnlocked }: { file: File; onUnlocked: (f: File) => 
       const q = await import("@/lib/qpdf");
       finish(await q.unlockPdf(file, password));
     } catch (e) {
-      setError((e as Error).name === "WrongPasswordError" ? "Incorrect password — try again." : (e as Error).message);
+      setError((e as Error).name === "WrongPasswordError" ? "Incorrect password. Try again." : (e as Error).message);
     } finally {
       setBusy(false);
     }
@@ -170,7 +170,7 @@ const FileDropZone = ({
     (incoming: File[]) => {
       const ok = incoming.filter(accepts);
       const rejected = incoming.length - ok.length;
-      if (rejected) toast.error(`${rejected} file${rejected > 1 ? "s" : ""} skipped — this tool takes ${kind === "pdf" ? "PDFs" : "images"} only.`);
+      if (rejected) toast.error(`${rejected} file${rejected > 1 ? "s" : ""} skipped. This tool only takes ${kind === "pdf" ? "PDFs" : "images"}.`);
       if (ok.length) onFiles(multiple ? ok : [ok[0]]);
     },
     [accepts, kind, multiple, onFiles],

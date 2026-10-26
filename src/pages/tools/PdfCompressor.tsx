@@ -17,7 +17,7 @@ type Mode = "lossless" | "balanced" | "strong" | "target";
 
 const MODES: { value: Mode; label: string; hint: string }[] = [
   { value: "lossless", label: "Lossless", hint: "Rewrites the file structure. Text stays selectable; savings are usually small." },
-  { value: "balanced", label: "Balanced", hint: "Pages become 150 DPI images at good quality — readable and much smaller." },
+  { value: "balanced", label: "Balanced", hint: "Pages become 150 DPI images. Still easy to read, and much smaller." },
   { value: "strong", label: "Strong", hint: "100 DPI, lower quality. Smallest files; fine print may blur." },
   { value: "target", label: "Target size", hint: "Finds the sharpest result under your KB limit." },
 ];
@@ -57,12 +57,12 @@ const PdfCompressor = () => {
         if (file.size <= max) {
           const lossless = await compressLossless(file);
           blob = lossless.size < file.size ? lossless : file;
-          note = "already under target — kept as vector";
+          note = "already under the target, kept as is";
         } else {
           const r = await compressToSize(file, max, grayscale, setBusy);
           blob = r.blob;
           note = `${r.dpi} DPI · quality ${Math.round(r.quality * 100)}%`;
-          if (!r.reached) toast.warning(`Couldn’t reach ${targetKB} KB — this is the smallest readable version. Try grayscale or removing pages.`);
+          if (!r.reached) toast.warning(`Couldn’t reach ${targetKB} KB . This is the smallest readable version. Try grayscale or remove some pages.`);
         }
       } else {
         const opts = mode === "balanced" ? { dpi: 150, quality: 0.72 } : { dpi: 100, quality: 0.55 };

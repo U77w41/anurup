@@ -169,7 +169,7 @@ const PassportPhoto = () => {
             ctx.strokeRect(x - 0.5, y - 0.5, W + 1, H + 1);
           }
         const sheetEnc = await encodeCanvas(sheetCanvas, { mime: "image/jpeg", quality: 0.95, dpi: dpiNum });
-        items.push({ blob: sheetEnc.blob, name: deriveName(file.name, `passport-sheet-${sheet}`, "jpg"), note: `${cols * rows} copies — print at 100% scale` });
+        items.push({ blob: sheetEnc.blob, name: deriveName(file.name, `passport-sheet-${sheet}`, "jpg"), note: `${cols * rows} copies, print at 100% scale` });
       }
       setResults(items);
     } finally {

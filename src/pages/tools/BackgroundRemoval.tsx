@@ -100,7 +100,7 @@ const BackgroundRemoval = () => {
 
       {file && (
         <Panel>
-          <Field label="Background" hint="You can change this after processing — no need to run the model again.">
+          <Field label="Background" hint="You can change this after processing without running the model again.">
             <div className="flex flex-wrap gap-2">
               {[...BG_COLORS, { label: "Custom", value: "custom" }].map((c) => (
                 <button

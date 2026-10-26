@@ -48,7 +48,7 @@ const ImageCompressor = () => {
         if (mode === "target" && !(parseInt(maxSide, 10) > 0) && (format === "keep" || format === f.type) && f.size <= (parseFloat(targetKB) || 100) * 1024) {
           before += f.size;
           after += f.size;
-          out.push({ blob: f, name: f.name, note: "already under target — kept original" });
+          out.push({ blob: f, name: f.name, note: "already under the target, original kept" });
           continue;
         }
         const { img } = await loadImage(f);
@@ -73,7 +73,7 @@ const ImageCompressor = () => {
         if (res.blob.size >= f.size && res.blob.type === f.type && !resized) {
           before += f.size;
           after += f.size;
-          out.push({ blob: f, name: f.name, note: "already optimal — kept original" });
+          out.push({ blob: f, name: f.name, note: "already as small as it gets, original kept" });
           continue;
         }
         before += f.size;
@@ -102,7 +102,7 @@ const ImageCompressor = () => {
         multiple
         onFiles={addFiles}
         label="Drop images to compress"
-        sublabel="JPG, PNG or WebP — batch supported"
+        sublabel="JPG, PNG or WebP. Add as many as you like."
         files={files}
         onRemoveFile={(i) => {
           setFiles((prev) => prev.filter((_, j) => j !== i));
@@ -132,7 +132,7 @@ const ImageCompressor = () => {
           )}
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Output format" hint={format === "keep" ? "PNG stays lossless — only resizing reduces its size." : undefined}>
+            <Field label="Output format" hint={format === "keep" ? "PNG stays lossless, so only resizing makes it smaller." : undefined}>
               <Segmented size="sm" value={format} onChange={setFormat} options={[{ value: "image/jpeg", label: "JPG" }, { value: "image/webp", label: "WebP" }, { value: "keep", label: "Same as input" }]} />
             </Field>
             <Field label="Limit longest side (px)" hint="Optional, e.g. 1600">

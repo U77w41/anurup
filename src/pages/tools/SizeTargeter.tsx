@@ -15,9 +15,9 @@ type Unit = "px" | "cm" | "mm" | "in";
 type Fit = "cover" | "contain" | "stretch";
 
 const QUICK = [
-  { label: "Photo 200×230 px · 20–50 KB", unit: "px" as Unit, w: "200", h: "230", min: "20", max: "50", dpi: "200" },
+  { label: "Photo 200×230 px · 20-50 KB", unit: "px" as Unit, w: "200", h: "230", min: "20", max: "50", dpi: "200" },
   { label: "Photo 3.5×4.5 cm · 200 DPI · ≤ 50 KB", unit: "cm" as Unit, w: "3.5", h: "4.5", min: "", max: "50", dpi: "200" },
-  { label: "Signature 140×60 px · 10–20 KB", unit: "px" as Unit, w: "140", h: "60", min: "10", max: "20", dpi: "200" },
+  { label: "Signature 140×60 px · 10-20 KB", unit: "px" as Unit, w: "140", h: "60", min: "10", max: "20", dpi: "200" },
   { label: "Document 1000 px wide · ≤ 300 KB", unit: "px" as Unit, w: "1000", h: "", min: "", max: "300", dpi: "150" },
 ];
 
@@ -80,7 +80,7 @@ const SizeTargeter = () => {
     if (!tw) tw = Math.round(th * aspect);
     if (!th) th = Math.round(tw / aspect);
     if (tw > 12000 || th > 12000) {
-      toast.error("That’s larger than 12000 px — check the unit and DPI.");
+      toast.error("That is larger than 12000 px. Check the unit and the DPI.");
       return;
     }
     const max = parseFloat(maxKB) > 0 ? parseFloat(maxKB) * 1024 : undefined;
@@ -113,7 +113,7 @@ const SizeTargeter = () => {
       const okMin = !min || size >= min;
       setStatus({
         ok: okMax && okMin,
-        text: okMax && okMin ? `Within limits (${formatBytes(size)})` : !okMax ? `Still ${formatBytes(size)} at lowest quality — reduce the dimensions` : `Below minimum`,
+        text: okMax && okMin ? `Within limits (${formatBytes(size)})` : !okMax ? `Still ${formatBytes(size)} even at the lowest quality. Reduce the dimensions.` : `Below minimum`,
       });
       setResult({
         blob: enc.blob,

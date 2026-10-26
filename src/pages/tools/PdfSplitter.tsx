@@ -148,7 +148,7 @@ const PdfSplitter = () => {
           )}
 
           {mode === "ranges" && (
-            <Field label="Ranges — one output file per group" hint="Separate groups with semicolons, e.g. “1-3; 4-6; 7, 9”.">
+            <Field label="Ranges (one output file per group)" hint="Separate groups with semicolons, e.g. “1-3; 4-6; 7, 9”.">
               <Input value={groups} onChange={(e) => setGroups(e.target.value)} />
             </Field>
           )}

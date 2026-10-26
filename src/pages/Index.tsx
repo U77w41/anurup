@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
+import { HOME } from "@/seo/content";
 
 const SECTIONS = [
   { key: "photo", title: "Photo & Signature" },
@@ -33,14 +34,11 @@ const Index = () => {
   return (
     <Layout>
       <section className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Form-ready photos &amp; PDFs</h1>
-        <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-          Resize photos to exact KB limits, clean signatures, merge, compress, sign and unlock PDFs — everything exam, visa and government portals ask for.
-          Nothing is uploaded.
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{HOME.h1}</h1>
+        <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-foreground">{HOME.intro}</p>
         <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           <span className="font-bold text-foreground">Chain tools:</span> Crop <ArrowRight className="h-3.5 w-3.5" /> Remove background
-          <ArrowRight className="h-3.5 w-3.5" /> Resize to 50 KB <span className="text-xs">— every result has “Continue with”, no re-uploading.</span>
+          <ArrowRight className="h-3.5 w-3.5" /> Resize to 50 KB <span className="text-xs">Every result has a Continue with button, so you never re-upload the file.</span>
         </p>
       </section>
 
@@ -50,7 +48,7 @@ const Index = () => {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search tools — e.g. “50 KB”, “signature”, “password”"
+            placeholder="Search tools, for example 50 KB, signature or password"
             className="h-12 rounded-lg bg-background pl-12 pr-10 text-base"
             aria-label="Search tools"
           />

@@ -20,30 +20,17 @@ import {
 } from "lucide-react";
 import type { FileKind } from "./format";
 
-export type ToolId =
-  | "passport-photo"
-  | "size-targeter"
-  | "image-compressor"
-  | "crop-rotate"
-  | "background-removal"
-  | "signature-cleaner"
-  | "format-converter"
-  | "pdf-viewer"
-  | "image-to-pdf"
-  | "pdf-merger"
-  | "pdf-splitter"
-  | "pdf-page-manager"
-  | "pdf-compressor"
-  | "pdf-to-images"
-  | "pdf-stamp"
-  | "pdf-sign"
-  | "pdf-unlock";
+import { TOOL_CONTENT, type ToolContent, type ToolId } from "@/seo/content";
+
+export type { ToolId };
 
 export interface ToolDef {
   id: ToolId;
+  /** Name shown on cards, menus and as the page heading fallback. */
   title: string;
   /** Short label for menus ("Continue in …"). */
   short: string;
+  /** One-line card summary. */
   description: string;
   icon: LucideIcon;
   category: "photo" | "pdf";
@@ -53,214 +40,44 @@ export interface ToolDef {
   /** Whether the tool works on several files at once. */
   multiple: boolean;
   keywords?: string;
+  /** Full SEO/guide copy (H1, intro, steps, FAQ). */
+  content: ToolContent;
 }
 
-export const TOOLS: ToolDef[] = [
-  {
-    id: "passport-photo",
-    title: "Passport Photo Maker",
-    short: "Passport photo",
-    description: "Frame a photo to passport/visa/exam presets, set background colour and DPI, and make a printable sheet.",
-    icon: Camera,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: false,
-    keywords: "visa id photo 35x45 2x2 print sheet",
-  },
-  {
-    id: "size-targeter",
-    title: "Exact Size & KB Targeter",
-    short: "Resize to exact size & KB",
-    description: "Resize to exact px / cm / mm / inches at a DPI and land between a min and max KB limit.",
-    icon: Maximize,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: false,
-    keywords: "resize dimensions kb limit dpi upload portal",
-  },
-  {
-    id: "image-compressor",
-    title: "Image Compressor",
-    short: "Compress image",
-    description: "Shrink images to a target size in KB or by quality, keeping dimensions where possible.",
-    icon: Minimize2,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: true,
-    keywords: "reduce size kb mb optimize",
-  },
-  {
-    id: "crop-rotate",
-    title: "Crop, Rotate & Flip",
-    short: "Crop / rotate",
-    description: "Free or fixed-ratio cropping with drag handles, 90° rotation and mirroring.",
-    icon: Crop,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: false,
-    keywords: "trim aspect ratio mirror",
-  },
-  {
-    id: "background-removal",
-    title: "Background Remover",
-    short: "Remove background",
-    description: "AI background removal in the browser, with white, blue, custom or transparent fill.",
-    icon: Eraser,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: false,
-    keywords: "transparent cutout white background",
-  },
-  {
-    id: "signature-cleaner",
-    title: "Signature Cleaner",
-    short: "Clean signature",
-    description: "Turn a phone photo of a signature into crisp ink on white or transparent, auto-trimmed.",
-    icon: Signature,
-    category: "photo",
-    badge: "Photo",
-    accepts: "image",
-    multiple: false,
-    keywords: "sign scan threshold ink",
-  },
-  {
-    id: "format-converter",
-    title: "Format Converter",
-    short: "Convert format",
-    description: "Convert images between JPG, PNG and WebP — one or many at a time.",
-    icon: RefreshCw,
-    category: "photo",
-    badge: "Convert",
-    accepts: "image",
-    multiple: true,
-    keywords: "jpg png webp jpeg",
-  },
-  {
-    id: "pdf-viewer",
-    title: "PDF Viewer",
-    short: "View PDF",
-    description: "Preview any PDF page by page with zoom — nothing is uploaded.",
-    icon: FileSearch,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "preview read open",
-  },
-  {
-    id: "image-to-pdf",
-    title: "Image to PDF",
-    short: "Images → PDF",
-    description: "Combine images into one PDF with page size, orientation and margin options.",
-    icon: FileImage,
-    category: "pdf",
-    badge: "Convert",
-    accepts: "image",
-    multiple: true,
-    keywords: "jpg to pdf scan convert",
-  },
-  {
-    id: "pdf-merger",
-    title: "PDF Merger",
-    short: "Merge PDFs",
-    description: "Combine several PDFs into one, in the order you choose.",
-    icon: Merge,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: true,
-    keywords: "combine join",
-  },
-  {
-    id: "pdf-splitter",
-    title: "PDF Splitter",
-    short: "Split PDF",
-    description: "Extract pages by clicking thumbnails or typing ranges, or split into single pages / chunks.",
-    icon: Scissors,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "extract pages separate",
-  },
-  {
-    id: "pdf-page-manager",
-    title: "Organize Pages",
-    short: "Organize pages",
-    description: "Reorder, rotate and delete pages visually using real page thumbnails.",
-    icon: LayoutList,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "reorder rotate delete page manager arrange",
-  },
-  {
-    id: "pdf-compressor",
-    title: "PDF Compressor",
-    short: "Compress PDF",
-    description: "Lossless clean-up or strong compression down to a target size in KB.",
-    icon: FileDown,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "reduce size kb shrink",
-  },
-  {
-    id: "pdf-to-images",
-    title: "PDF to Images",
-    short: "PDF → images",
-    description: "Export pages as JPG or PNG at 72–300 DPI, individually or as a ZIP.",
-    icon: Images,
-    category: "pdf",
-    badge: "Convert",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "jpg png export render",
-  },
-  {
-    id: "pdf-stamp",
-    title: "Page Numbers & Watermark",
-    short: "Page numbers / watermark",
-    description: "Add page numbers and a text watermark to every page.",
-    icon: Stamp,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "number footer confidential draft",
-  },
-  {
-    id: "pdf-sign",
-    title: "Sign & Fill PDF",
-    short: "Sign / fill PDF",
-    description: "Place a signature or photo and type text or dates anywhere on a page.",
-    icon: PenLine,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "signature text date fill form",
-  },
-  {
-    id: "pdf-unlock",
-    title: "Unlock PDF",
-    short: "Unlock PDF",
-    description: "Remove a PDF’s open password or print/copy restrictions — keeps text, links and quality intact.",
-    icon: LockOpen,
-    category: "pdf",
-    badge: "PDF",
-    accepts: "pdf",
-    multiple: false,
-    keywords: "password remove decrypt protected restrictions secured encrypted",
-  },
-];
+const ICONS: Record<ToolId, LucideIcon> = {
+  "passport-photo": Camera,
+  "size-targeter": Maximize,
+  "image-compressor": Minimize2,
+  "crop-rotate": Crop,
+  "background-removal": Eraser,
+  "signature-cleaner": Signature,
+  "format-converter": RefreshCw,
+  "pdf-viewer": FileSearch,
+  "image-to-pdf": FileImage,
+  "pdf-merger": Merge,
+  "pdf-splitter": Scissors,
+  "pdf-page-manager": LayoutList,
+  "pdf-compressor": FileDown,
+  "pdf-to-images": Images,
+  "pdf-stamp": Stamp,
+  "pdf-sign": PenLine,
+  "pdf-unlock": LockOpen,
+};
+
+/** Tool registry, built from the copy in src/seo/content.ts. */
+export const TOOLS: ToolDef[] = TOOL_CONTENT.map((c) => ({
+  id: c.id,
+  title: c.name,
+  short: c.short,
+  description: c.card,
+  icon: ICONS[c.id],
+  category: c.category,
+  badge: c.badge,
+  accepts: c.accepts,
+  multiple: c.multiple,
+  keywords: c.keywords,
+  content: c,
+}));
 
 export const BADGE_CLASS: Record<ToolDef["badge"], string> = {
   Photo: "tool-badge-photo",

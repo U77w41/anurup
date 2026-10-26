@@ -3,6 +3,9 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { ArrowLeft, FileText, Github, Globe, Image, Layers, LayoutGrid, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import WorkspaceDrawer from "@/components/WorkspaceDrawer";
+import ToolGuide from "@/components/ToolGuide";
+import { HOME, SITE, toolUrl } from "@/seo/content";
+import { applyHead } from "@/seo/head";
 import { ThemeIconButton, ThemeToggle } from "@/components/ThemeToggle";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { BADGE_CLASS, TOOLS } from "@/lib/tools";
@@ -19,12 +22,17 @@ interface LayoutProps {
 }
 
 const WIDTH = { md: "max-w-2xl", lg: "max-w-4xl", xl: "max-w-6xl" };
-const REPO_URL = "https://github.com/U77w41/anurup";
-const PORTFOLIO_URL = "https://u77w41.github.io/";
+const REPO_URL = SITE.repo;
+const PORTFOLIO_URL = SITE.authorUrl;
+
+/** Router path without a trailing slash ("/pdf-merger/" → "/pdf-merger"). */
+export function normalizePath(pathname: string) {
+  return pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+}
 
 /** Which sidebar entry is active for the current route. */
 function useSection(): "all" | "photo" | "pdf" | null {
-  const { pathname } = useLocation();
+  const pathname = normalizePath(useLocation().pathname);
   const [params] = useSearchParams();
   if (pathname === "/") {
     const c = params.get("c");
@@ -60,7 +68,7 @@ function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => vo
               ANURUP
             </Link>
           </h1>
-          <p className="mt-1 text-sm leading-snug text-muted-foreground">Photo &amp; PDF toolkit for online forms — runs 100% in your browser</p>
+          <p className="mt-1 text-sm leading-snug text-muted-foreground">Photo &amp; PDF tools for online forms. Runs entirely in your browser.</p>
         </div>
         <ul className="flex gap-4 text-muted-foreground">
           <li>
@@ -69,7 +77,7 @@ function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => vo
             </a>
           </li>
           <li>
-            <a href={PORTFOLIO_URL} target="_blank" rel="noreferrer" title="Ujjwal Chowdhury — portfolio & blog" className="hover:text-foreground">
+            <a href={PORTFOLIO_URL} target="_blank" rel="noreferrer" title="Ujjwal Chowdhury: portfolio and blog" className="hover:text-foreground">
               <Globe className="h-6 w-6" strokeWidth={1.5} />
             </a>
           </li>
@@ -119,15 +127,21 @@ function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => vo
 }
 
 const Layout = ({ children, title, description, width = "md" }: LayoutProps) => {
-  const { pathname } = useLocation();
+  const pathname = normalizePath(useLocation().pathname);
   const { files } = useWorkspace();
   const [menuOpen, setMenuOpen] = useState(false);
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const tool = TOOLS.find((t) => `/${t.id}` === pathname);
 
+  // Tool pages take their heading and intro from the shared SEO copy.
+  const heading = tool?.content.h1 ?? title;
+  const intro = tool?.content.intro ?? description;
+
   useEffect(() => {
-    document.title = title ? `${title} · ANURUP` : "ANURUP — photo & PDF toolkit for online forms";
-  }, [title]);
+    if (tool) applyHead({ title: `${tool.content.title} | ${SITE.name}`, description: tool.content.description, url: toolUrl(tool.id) });
+    else if (pathname === "/") applyHead({ title: HOME.title, description: HOME.description, url: SITE.url });
+    else document.title = title ? `${title} | ${SITE.name}` : HOME.title;
+  }, [tool, pathname, title]);
 
   const openWorkspace = () => setWorkspaceOpen(true);
 
@@ -170,7 +184,7 @@ const Layout = ({ children, title, description, width = "md" }: LayoutProps) => 
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col py-6 lg:py-12">
           <main className="flex-1">
-            {title ? (
+            {heading ? (
               <div className={cn("mx-auto space-y-6", WIDTH[width])}>
                 <motion.header initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg bg-card p-6 shadow-card sm:p-8">
                   <div className="mb-4 flex items-center gap-3">
@@ -179,10 +193,11 @@ const Layout = ({ children, title, description, width = "md" }: LayoutProps) => 
                     </Link>
                     {tool && <span className={cn("rounded px-2.5 py-1 text-xs", BADGE_CLASS[tool.badge])}>{tool.badge}</span>}
                   </div>
-                  <h1 className="text-2xl font-bold text-card-foreground sm:text-3xl">{title}</h1>
-                  {description && <p className="mt-2 text-base leading-relaxed text-muted-foreground sm:text-lg">{description}</p>}
+                  <h1 className="text-2xl font-bold text-card-foreground sm:text-3xl">{heading}</h1>
+                  {intro && <p className="mt-2 text-base leading-relaxed text-muted-foreground sm:text-lg">{intro}</p>}
                 </motion.header>
                 {children}
+                {tool && <ToolGuide content={tool.content} />}
               </div>
             ) : (
               children
@@ -197,7 +212,7 @@ const Layout = ({ children, title, description, width = "md" }: LayoutProps) => 
               </a>{" "}
               · ANURUP
             </p>
-            <p>100% client-side — your files never leave your browser.</p>
+            <p>Everything runs in your browser. Your files are never uploaded.</p>
           </footer>
         </div>
       </div>

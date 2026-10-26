@@ -52,7 +52,7 @@ const WorkspaceDrawer = ({ open: isOpen, onOpenChange: setIsOpen }: { open: bool
         <SheetHeader className="border-b border-border p-5 pb-4 text-left">
           <SheetTitle className="font-display">Workspace</SheetTitle>
           <SheetDescription>
-            Results you save or pass between tools. Stored only in this browser — open any file in another tool without downloading it.
+            Results you save or pass between tools. They are stored only in this browser, and you can open any of them in another tool without downloading.
           </SheetDescription>
           <div className="flex gap-2 pt-1">
             <Button size="sm" variant="outline" className="gap-1.5 hover:bg-muted hover:text-foreground" onClick={() => inputRef.current?.click()}>

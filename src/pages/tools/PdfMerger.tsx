@@ -62,7 +62,7 @@ const PdfMerger = () => {
         multiple
         onFiles={addFiles}
         label="Drop PDFs here"
-        sublabel="Add two or more — they’ll be merged top to bottom"
+        sublabel="Add two or more. They are merged from top to bottom."
         files={files}
         onMoveFile={move}
         onReplaceFile={(i, f) => {

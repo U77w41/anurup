@@ -37,7 +37,7 @@ const PdfUnlock = () => {
       setStatus(state);
       if (state === "restricted" && unlocked) {
         setResult({ blob: unlocked, name: outName(f), note: "restrictions removed" });
-        toast.success("No open password — print/copy/edit restrictions removed.");
+        toast.success("This PDF had no open password. Print, copy and edit restrictions are removed.");
       }
       if (state === "password") setTimeout(() => inputRef.current?.focus(), 50);
     } catch (e) {
@@ -56,7 +56,7 @@ const PdfUnlock = () => {
       setResult({ blob, name: outName(file), note: "password removed" });
       setPassword("");
     } catch (e) {
-      setError(e instanceof WrongPasswordError ? "Incorrect password — check Caps Lock and try again. The owner password works too." : (e as Error).message);
+      setError(e instanceof WrongPasswordError ? "Incorrect password. Check Caps Lock and try again. The owner password also works." : (e as Error).message);
       inputRef.current?.select();
     } finally {
       setBusy(false);
@@ -93,7 +93,7 @@ const PdfUnlock = () => {
       {status === "none" && file && (
         <Panel>
           <p className="flex items-start gap-2 text-sm text-muted-foreground">
-            <Info className="mt-0.5 h-4 w-4 shrink-0" /> This PDF isn’t password-protected or restricted — there’s nothing to remove. You can use it in any PDF tool as it is.
+            <Info className="mt-0.5 h-4 w-4 shrink-0" /> This PDF has no password or restrictions, so there is nothing to remove. You can use it in any PDF tool as it is.
           </p>
         </Panel>
       )}
@@ -153,7 +153,7 @@ const PdfUnlock = () => {
           items={[result]}
           summary={
             <span className="inline-flex items-center gap-1.5 font-medium text-success">
-              <ShieldCheck className="h-4 w-4" /> Unlocked — opens without a password
+              <ShieldCheck className="h-4 w-4" /> Unlocked. It opens without a password now.
             </span>
           }
         />

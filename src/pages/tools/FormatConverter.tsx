@@ -72,7 +72,7 @@ const FormatConverter = () => {
 
       {files.length > 0 && (
         <Panel>
-          <Field label="Convert to" hint={mime === "image/jpeg" ? "Transparent areas become white." : mime === "image/png" ? "Lossless — larger files, keeps transparency." : undefined}>
+          <Field label="Convert to" hint={mime === "image/jpeg" ? "Transparent areas become white." : mime === "image/png" ? "Lossless. Bigger files, but transparency is kept." : undefined}>
             <Segmented value={mime} onChange={setMime} options={FORMATS.map((f) => ({ value: f.mime, label: f.label }))} />
           </Field>
           {mime !== "image/png" && (

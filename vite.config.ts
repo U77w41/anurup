@@ -2,10 +2,12 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { seoPrerender } from "./src/seo/prerender";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./",
+  // Real URLs (/anurup/pdf-merger/) need an absolute base. Override with BASE_PATH=/ for a custom domain.
+  base: mode === "development" ? "/" : process.env.BASE_PATH || "/anurup/",
   server: {
     host: "::",
     port: 8080,
@@ -13,7 +15,7 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger(), seoPrerender()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

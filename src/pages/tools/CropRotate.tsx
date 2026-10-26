@@ -299,7 +299,7 @@ const CropRotate = () => {
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
-            {crop ? `Selection ${Math.round(crop.w)} × ${Math.round(crop.h)} px` : `Whole image ${dims.W} × ${dims.H} px — drag to select an area`}
+            {crop ? `Selection ${Math.round(crop.w)} × ${Math.round(crop.h)} px` : `Whole image ${dims.W} × ${dims.H} px. Drag on the image to select an area.`}
           </p>
 
           <Button onClick={apply} disabled={busy} className="w-full gap-2">
