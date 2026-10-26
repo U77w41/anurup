@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -37,24 +38,26 @@ const Fallback = () => (
 );
 
 const App = () => (
-  <TooltipProvider>
-    <Toaster />
-    <Sonner position="top-center" richColors closeButton />
-    <WorkspaceProvider>
-      <HashRouter>
-        <Suspense fallback={<Fallback />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {(Object.keys(pages) as ToolId[]).map((id) => {
-              const Page = pages[id];
-              return <Route key={id} path={`/${id}`} element={<Page />} />;
-            })}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </HashRouter>
-    </WorkspaceProvider>
-  </TooltipProvider>
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="anurup-theme" disableTransitionOnChange>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner position="top-center" richColors closeButton />
+      <WorkspaceProvider>
+        <HashRouter>
+          <Suspense fallback={<Fallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              {(Object.keys(pages) as ToolId[]).map((id) => {
+                const Page = pages[id];
+                return <Route key={id} path={`/${id}`} element={<Page />} />;
+              })}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </HashRouter>
+      </WorkspaceProvider>
+    </TooltipProvider>
+  </ThemeProvider>
 );
 
 export default App;

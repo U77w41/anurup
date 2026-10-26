@@ -15,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "system-ui", "sans-serif"],
+        sans: ["Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Droid Sans", "Helvetica Neue", "sans-serif"],
+        display: ["Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -56,9 +56,6 @@ export default {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
-        "tool-photo": "hsl(var(--tool-photo))",
-        "tool-pdf": "hsl(var(--tool-pdf))",
-        "tool-convert": "hsl(var(--tool-convert))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

@@ -42,11 +42,13 @@ Government exam and visa portals all want something slightly different: a 35×45
 ### Works across tools
 
 - **Continue with…** - every result has one-click buttons to open it in the next tool (e.g. *Crop → Compress*, *Images → PDF → Compress PDF*). Suggested next steps are listed first.
-- **Workspace** - a shared file tray (top-right). Results you save or pass along live here, survive a page refresh (IndexedDB), and can be opened in any compatible tool. Select several files to send them together to a multi-file tool such as Image to PDF or PDF Merger.
+- **Workspace** - a shared file tray (in the sidebar, or the tray icon on mobile). Results you save or pass along live here, survive a page refresh (IndexedDB), and can be opened in any compatible tool. Select several files to send them together to a multi-file tool such as Image to PDF or PDF Merger.
 - **Choose from workspace** - every upload area can pick files from the workspace instead of the disk.
 - **Previews everywhere** - inline image/PDF preview on every result, plus an eye button on every input file.
 - **Paste to upload** - image tools accept Ctrl/⌘+V from the clipboard.
 - **Protected PDFs are flagged** - any PDF tool marks encrypted inputs with a *Protected · Unlock* badge and unlocks them in place.
+- **Search & categories** - find a tool by name or task (“50 KB”, “signature”, “password”), or filter to Photo & Signature / PDF tools.
+- **Dark mode** - follows your system setting by default; switch it with *Dark Mode* in the sidebar (sun/moon icon on mobile). The choice is remembered.
 
 ## Privacy
 

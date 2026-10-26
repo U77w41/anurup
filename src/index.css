@@ -1,99 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
+/*
+ * Theme mirrors https://u77w41.github.io/ (Hugo "Stack"): Lato, a soft lavender-grey
+ * page, white cards with layered shadows, slate accent, pastel tags — and the same
+ * charcoal palette in dark mode.
+ */
 @layer base {
   :root {
-    --background: 40 33% 98%;
-    --foreground: 220 20% 10%;
+    --background: 240 33% 97%; /* #f5f5fa */
+    --foreground: 0 0% 4%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 0 0% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 0 0% 4%;
 
-    --primary: 24 95% 53%;
+    --primary: 210 29% 29%; /* #34495e */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 0 0% 92%; /* #eaeaea */
+    --secondary-foreground: 0 0% 4%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 240 14% 94%;
+    --muted-foreground: 0 0% 45%; /* #747474 */
 
-    --accent: 198 70% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 90%;
-    --input: 220 13% 90%;
-    --ring: 24 95% 53%;
+    --border: 240 9% 89%;
+    --input: 240 6% 86%;
+    --ring: 210 29% 29%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem; /* 10px cards */
 
-    --success: 152 60% 42%;
+    --success: 145 63% 32%;
     --success-foreground: 0 0% 100%;
 
-    --tool-photo: 24 95% 53%;
-    --tool-pdf: 198 70% 50%;
-    --tool-convert: 262 60% 55%;
+    /* Pastel tag colours from the portfolio */
+    --tag-photo: #ddbeef;
+    --tag-pdf: #efbec8;
+    --tag-convert: #beefc1;
+    --tag-text: #1c1c1c;
 
-    --shadow-soft: 0 2px 24px -4px hsl(220 20% 10% / 0.08);
-    --shadow-card: 0 1px 3px hsl(220 20% 10% / 0.04), 0 4px 16px hsl(220 20% 10% / 0.06);
-    --shadow-elevated: 0 8px 40px -8px hsl(220 20% 10% / 0.12);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+    --shadow-elevated: 0 10px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.04);
   }
 
   .dark {
-    --background: 220 20% 7%;
-    --foreground: 40 20% 95%;
+    --background: 0 0% 19%; /* #303030 */
+    --foreground: 0 0% 92%;
 
-    --card: 220 18% 11%;
-    --card-foreground: 40 20% 95%;
+    --card: 0 0% 26%; /* #424242 */
+    --card-foreground: 0 0% 92%;
 
-    --popover: 220 18% 11%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 0 0% 26%;
+    --popover-foreground: 0 0% 92%;
 
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 192 15% 94%; /* #ecf0f1 */
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 220 14% 16%;
-    --secondary-foreground: 40 20% 95%;
+    --secondary: 0 0% 33%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 220 14% 16%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 0 0% 23%;
+    --muted-foreground: 0 0% 72%;
 
-    --accent: 198 70% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 34%;
+    --accent-foreground: 0 0% 95%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 72% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 24 95% 53%;
+    --border: 0 0% 33%;
+    --input: 0 0% 38%;
+    --ring: 192 15% 94%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --success: 145 50% 55%;
+    --success-foreground: 0 0% 0%;
+
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.16), 0 0 2px rgba(0, 0, 0, 0.2);
+    --shadow-elevated: 0 10px 20px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2);
+
+    color-scheme: dark;
   }
 }
 
@@ -101,24 +97,21 @@
   * {
     @apply border-border;
   }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Space Grotesk', sans-serif;
-  }
-  .text-gradient-primary {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(24 90% 62%));
-  }
-  .bg-gradient-hero {
-    background: linear-gradient(135deg, hsl(var(--background)), hsl(40 40% 95%));
+    font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+    @apply transition-shadow duration-300 hover:shadow-elevated;
   }
   .shadow-card {
     box-shadow: var(--shadow-card);
@@ -127,14 +120,15 @@
     box-shadow: var(--shadow-elevated);
   }
   .tool-badge-photo {
-    @apply bg-primary/10 text-primary;
+    background-color: var(--tag-photo);
+    color: var(--tag-text);
   }
   .tool-badge-pdf {
-    background-color: hsl(var(--tool-pdf) / 0.1);
-    color: hsl(var(--tool-pdf));
+    background-color: var(--tag-pdf);
+    color: var(--tag-text);
   }
   .tool-badge-convert {
-    background-color: hsl(var(--tool-convert) / 0.1);
-    color: hsl(var(--tool-convert));
+    background-color: var(--tag-convert);
+    color: var(--tag-text);
   }
 }

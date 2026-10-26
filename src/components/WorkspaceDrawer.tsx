@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState } from "react";
-import { ChevronDown, Download, Eye, Inbox, Layers, MoreHorizontal, Trash2, Upload } from "lucide-react";
+import { ChevronDown, Download, Eye, Inbox, MoreHorizontal, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,11 +27,10 @@ function timeAgo(ts: number) {
   return new Date(ts).toLocaleDateString();
 }
 
-/** Header button + slide-over listing every file in the shared workspace. */
-const WorkspaceDrawer = () => {
+/** Slide-over listing every file in the shared workspace (opened from the sidebar / top bar). */
+const WorkspaceDrawer = ({ open: isOpen, onOpenChange: setIsOpen }: { open: boolean; onOpenChange: (o: boolean) => void }) => {
   const { files, add, remove, clear } = useWorkspace();
   const open = useOpenWorkspaceFiles();
-  const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [preview, setPreview] = useState<WorkFile | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,17 +48,6 @@ const WorkspaceDrawer = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className="relative gap-2 hover:bg-muted hover:text-foreground" data-testid="workspace-button">
-          <Layers />
-          <span className="hidden sm:inline">Workspace</span>
-          {files.length > 0 && (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-semibold text-primary-foreground">
-              {files.length}
-            </span>
-          )}
-        </Button>
-      </SheetTrigger>
       <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
         <SheetHeader className="border-b border-border p-5 pb-4 text-left">
           <SheetTitle className="font-display">Workspace</SheetTitle>

@@ -48,7 +48,7 @@ const PageSelectGrid = ({ file, doc, numPages, selected, onChange }: PageSelectG
             )}
           >
             <PdfThumbnail file={file} doc={doc} page={p} width={140} />
-            <span className={cn("absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full border text-white", on ? "border-primary bg-primary" : "border-neutral-300 bg-white/80")}>
+            <span className={cn("absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full border text-primary-foreground", on ? "border-primary bg-primary" : "border-neutral-300 bg-white/80")}>
               {on && <Check className="h-3 w-3" />}
             </span>
             <span className="absolute bottom-0 left-0 right-0 bg-black/55 py-0.5 text-center text-[11px] font-medium text-white">{p}</span>

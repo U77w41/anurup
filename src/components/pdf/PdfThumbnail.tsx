@@ -81,7 +81,7 @@ const PdfThumbnail = ({ file, page = 1, width = 140, doc, className, rotate = 0 
       ) : failed ? (
         <FileText className="h-6 w-6 text-neutral-400" />
       ) : (
-        <div className="h-full w-full animate-pulse bg-neutral-100" />
+        <div className="h-full w-full animate-pulse bg-neutral-100 dark:bg-neutral-600" />
       )}
     </div>
   );

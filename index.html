@@ -8,7 +8,17 @@
       name="description"
       content="Resize photos to exact KB limits, make passport photos, clean signatures, and merge, split, compress, sign, unlock and preview PDFs — entirely in your browser."
     />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f5f5fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#303030" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Apply the saved/system colour scheme before first paint (no light flash in dark mode).
+      try {
+        var t = localStorage.getItem("anurup-theme") || "system";
+        var d = t === "dark" || (t === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", d);
+        document.documentElement.style.colorScheme = d ? "dark" : "light";
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="alternate icon" href="./favicon.ico" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
