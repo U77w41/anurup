@@ -33,6 +33,7 @@
     "src"
   ],
   "exclude": [
-    "src/seo/prerender.ts"
+    "src/seo/prerender.ts",
+    "src/seo/pwa.ts"
   ]
 }

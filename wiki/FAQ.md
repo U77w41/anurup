@@ -31,4 +31,7 @@ No. It needs the password that opens the file.
 No. It places a picture of your signature on the page. It does not add a certificate-based digital signature.
 
 **Can I use it offline?**
-Not yet. You need a connection to load each tool. The processing itself always happens on your device.
+Yes. After your first visit every tool works without internet, in a normal tab or as an installed app. Remove Image Background needs a connection the first time, to download its AI model.
+
+**Can I install it as an app?**
+Yes. In Chrome or Edge click **Install app** in the sidebar. On an iPhone use Share, then **Add to Home Screen**. See [Install as an app](Install-as-an-App).

@@ -6,7 +6,7 @@ ANURUP is a static website. Every tool runs inside your browser tab using Canvas
 
 ## What the page downloads
 
-- The app itself, from GitHub Pages.
+- The app itself, from GitHub Pages. A copy is kept on your device so it works offline.
 - Web fonts from Google Fonts.
 - The background-removal model from IMG.LY's CDN, only the first time you use Remove Image Background. Your photo is processed locally after that.
 
@@ -14,6 +14,7 @@ ANURUP is a static website. Every tool runs inside your browser tab using Canvas
 
 - **Workspace files** are kept in the browser's IndexedDB so they survive a refresh. Remove them one by one or with **Clear all** in the Workspace panel. Clearing site data in your browser settings removes them too.
 - **Theme choice** (light or dark) is kept in localStorage.
+- **App files** (about 6 MB) are kept by a service worker so ANURUP opens without internet, plus the background-removal model once you have used that tool. These are copies of the app, not of your files.
 
 Nothing else is saved. PDF passwords are used once to decrypt the file and are not stored.
 

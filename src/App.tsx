@@ -8,6 +8,8 @@ import { Loader2 } from "lucide-react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { WorkspaceProvider } from "@/lib/workspace";
+import PwaPrompt from "@/components/PwaPrompt";
+import { ThemeColorSync } from "@/components/ThemeToggle";
 import type { ToolId } from "@/lib/tools";
 
 // Each tool is its own chunk so the home page loads fast on slow connections.
@@ -42,6 +44,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner position="top-center" richColors closeButton />
+      <PwaPrompt />
+      <ThemeColorSync />
       <WorkspaceProvider>
         <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Suspense fallback={<Fallback />}>

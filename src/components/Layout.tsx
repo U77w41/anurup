@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { ArrowLeft, FileText, Github, Globe, Image, Layers, LayoutGrid, Menu } from "lucide-react";
+import { ArrowLeft, Download, FileText, Github, Globe, Image, Layers, LayoutGrid, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import WorkspaceDrawer from "@/components/WorkspaceDrawer";
 import ToolGuide from "@/components/ToolGuide";
@@ -10,6 +10,7 @@ import { ThemeIconButton, ThemeToggle } from "@/components/ThemeToggle";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { BADGE_CLASS, TOOLS } from "@/lib/tools";
 import { useWorkspace } from "@/lib/workspace";
+import { useInstallPrompt } from "@/lib/install";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/anurup_logo.svg";
 
@@ -45,6 +46,7 @@ function useSection(): "all" | "photo" | "pdf" | null {
 function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => void; onOpenWorkspace: () => void }) {
   const section = useSection();
   const { files } = useWorkspace();
+  const { canInstall, install } = useInstallPrompt();
 
   const items = [
     { key: "all", label: "All tools", to: "/", icon: LayoutGrid },
@@ -119,7 +121,21 @@ function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => vo
         </ol>
       </nav>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-auto space-y-5 pt-8">
+        {canInstall && (
+          <button
+            type="button"
+            onClick={() => {
+              onNavigate?.();
+              void install();
+            }}
+            className="flex w-full items-center gap-6 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            data-testid="install-app"
+          >
+            <Download className="h-6 w-6 shrink-0" strokeWidth={1.5} />
+            Install app
+          </button>
+        )}
         <ThemeToggle />
       </div>
     </div>
@@ -129,6 +145,7 @@ function SidebarContent({ onNavigate, onOpenWorkspace }: { onNavigate?: () => vo
 const Layout = ({ children, title, description, width = "md" }: LayoutProps) => {
   const pathname = normalizePath(useLocation().pathname);
   const { files } = useWorkspace();
+  const { canInstall, install } = useInstallPrompt();
   const [menuOpen, setMenuOpen] = useState(false);
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const tool = TOOLS.find((t) => `/${t.id}` === pathname);
@@ -157,6 +174,11 @@ const Layout = ({ children, title, description, width = "md" }: LayoutProps) => 
           ANURUP
         </Link>
         <div className="ml-auto flex items-center">
+          {canInstall && (
+            <button type="button" onClick={() => void install()} className="flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Install ANURUP as an app">
+              <Download className="h-5 w-5" />
+            </button>
+          )}
           <button type="button" onClick={openWorkspace} className="relative flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Open workspace">
             <Layers className="h-5 w-5" />
             {files.length > 0 && (

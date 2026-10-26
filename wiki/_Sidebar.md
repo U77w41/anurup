@@ -2,6 +2,7 @@
 
 - [Home](Home)
 - [Getting started](Getting-Started)
+- [Install as an app](Install-as-an-App)
 - [Photo and signature guides](Photo-and-Signature-Guides)
 - [PDF guides](PDF-Guides)
 - [Workspace and chaining](Workspace-and-Chaining)

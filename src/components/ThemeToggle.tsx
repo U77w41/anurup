@@ -11,6 +11,18 @@ export function useIsDark() {
   return mounted && resolvedTheme === "dark";
 }
 
+const THEME_COLOR = { light: "#f5f5fa", dark: "#303030" };
+
+/** Keeps the browser / installed-app title bar colour in step with the chosen theme. */
+export function ThemeColorSync() {
+  const { resolvedTheme } = useTheme();
+  useEffect(() => {
+    if (resolvedTheme !== "light" && resolvedTheme !== "dark") return;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", THEME_COLOR[resolvedTheme]));
+  }, [resolvedTheme]);
+  return null;
+}
+
 /** Sidebar switch, styled like the portfolio's "Dark Mode" toggle. */
 export function ThemeToggle({ className }: { className?: string }) {
   const { setTheme } = useTheme();

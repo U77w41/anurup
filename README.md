@@ -48,6 +48,19 @@ Government exam, job, visa and KYC portals each want something slightly differen
 - **Search and categories** - find a tool by name or task ("50 KB", "signature", "password"), or filter to Photo & Signature or PDF tools.
 - **Dark mode** - follows your system setting until you switch it with *Dark Mode* in the sidebar (sun/moon icon on mobile). The choice is remembered.
 
+## Install as an app and use it offline
+
+ANURUP is a Progressive Web App. Install it and it opens in its own window from the dock, Start menu or home screen. After the first visit every tool works without internet, installed or not.
+
+| Where | How |
+| --- | --- |
+| Chrome or Edge on a computer | Click **Install app** in the sidebar, or the install icon in the address bar. |
+| Android (Chrome) | Tap the download icon in the top bar, or **Install app** in the menu. |
+| iPhone and iPad (Safari) | Share → **Add to Home Screen**. |
+| Safari on a Mac | **File → Add to Dock**. |
+
+The app files (about 6 MB) are cached on first visit. Remove Image Background downloads its AI model on first use and keeps it for offline use after that. When a new version is deployed, a **Reload** prompt appears, and nothing changes until you click it. Full steps are on the [Install as an app](https://github.com/U77w41/anurup/wiki/Install-as-an-App) wiki page.
+
 ## Common questions
 
 **Are my files uploaded to a server?**
@@ -59,6 +72,9 @@ Open [Resize Image to KB & Pixels](https://u77w41.github.io/anurup/size-targeter
 **How do I compress a PDF to 100 KB?**
 Open [Compress PDF to KB](https://u77w41.github.io/anurup/pdf-compressor/), choose Target size and type 100. Turn on Grayscale for long scans.
 
+**Does it work offline?**
+Yes. After the first visit every tool works without internet, and you can [install it as an app](#install-as-an-app-and-use-it-offline). Remove Image Background needs a connection the first time to download its model.
+
 **Can it unlock a PDF without the password?**
 No. You need the password that opens the file. PDFs that only block printing or copying unlock without one.
 
@@ -66,7 +82,7 @@ More step-by-step guides are in the [wiki](https://github.com/U77w41/anurup/wiki
 
 ## Privacy
 
-Workspace files are stored in the browser's IndexedDB and can be cleared from the Workspace panel. The only network requests after the page loads are:
+Workspace files are stored in the browser's IndexedDB and can be cleared from the Workspace panel. A service worker caches the app's own files so it runs offline; it never stores or sends your files. The only other network requests are:
 
 - the background-removal model, downloaded from IMG.LY's CDN the first time you use **Remove Image Background** (cached after that);
 - web fonts from Google Fonts.
@@ -87,7 +103,7 @@ npm run dev          # http://localhost:8080
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Start the Vite dev server on port 8080. |
-| `npm run build` | Production build into `dist/`, including one prerendered page per tool, `sitemap.xml` and `404.html`. |
+| `npm run build` | Production build into `dist/`, including one prerendered page per tool, `sitemap.xml`, `404.html`, the web app manifest and the service worker. |
 | `npm run preview` | Serve the production build at http://localhost:4173/anurup/. |
 | `npm test` | Run unit tests (Vitest). |
 | `npm run lint` | ESLint. |
@@ -101,6 +117,8 @@ npm run dev          # http://localhost:8080
 2. Push to `main`, or run the workflow from the **Actions** tab.
 
 Each tool has its own URL, such as `/anurup/pdf-merger/`. At build time a small Vite plugin (`src/seo/prerender.ts`) writes a static HTML page for every tool with its own title, description, canonical link, Open Graph tags, structured data and page text, so search engines and link previews see real content. React takes over once the page loads. Old `#/` links still work and are redirected.
+
+The web app manifest and service worker come from [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) with the settings in `src/seo/pwa.ts`. The service worker precaches the app shell and every tool page, and caches Google Fonts and the background-removal model the first time they load. It only exists in production builds, so test install and offline use with `npm run build && npm run preview`.
 
 **Custom domain or different repo name:** change `SITE.url` in `src/seo/content.ts` and build with `BASE_PATH` set to the new path, for example `BASE_PATH=/ npm run build` for a domain root.
 
@@ -116,6 +134,7 @@ src/
 ├── seo/
 │   ├── content.ts             # Tool names, page titles, descriptions, how-to steps and FAQ
 │   ├── prerender.ts           # Build plugin: per-tool HTML, sitemap.xml, 404.html
+│   ├── pwa.ts                 # Web app manifest, app shortcuts and service worker caching rules
 │   └── head.ts                # Updates <head> tags on client-side navigation
 ├── components/
 │   ├── Layout.tsx             # Sidebar, page header, footer
@@ -123,12 +142,14 @@ src/
 │   ├── FileDropZone.tsx       # Upload: drag & drop, paste, pick from workspace, preview, re-order
 │   ├── ResultPanel.tsx        # Output: preview, download, save, "Continue with"
 │   ├── WorkspaceDrawer.tsx    # Shared file tray
-│   ├── ThemeToggle.tsx        # Dark mode switch
+│   ├── ThemeToggle.tsx        # Dark mode switch, title bar colour
+│   ├── PwaPrompt.tsx          # Registers the service worker, "new version" and "works offline" messages
 │   ├── pdf/                   # PdfViewer, PdfThumbnail, PageSelectGrid
 │   └── ui/                    # shadcn/ui primitives
 ├── hooks/use-tool-io.ts       # useIncomingFiles / useSendToTool - file hand-off between tools
 └── lib/
     ├── tools.ts               # Tool registry: icons, inputs, suggested next steps
+    ├── install.ts             # "Install app" button (beforeinstallprompt)
     ├── workspace.tsx          # Workspace context + IndexedDB persistence
     ├── image.ts               # Canvas helpers, quality search, compress-to-target
     ├── jpeg.ts                # JFIF DPI writing, lossless padding to a minimum size
@@ -137,6 +158,7 @@ src/
     ├── qpdf.ts                # PDF decryption (QPDF/WASM) and encrypted-file detection
     ├── signature.ts           # Signature clean-up (lighting correction + Otsu)
     └── pageRange.ts           # "1-3, 5, 8-" parsing
+public/pwa-*.png               # App icons (192, 512 and maskable 512)
 wiki/                          # Source of the GitHub wiki pages
 ```
 
@@ -154,7 +176,7 @@ The home page, menus, prerendered page and sitemap pick up the new tool from the
 
 ## Tech stack
 
-React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui (Radix) · pdf-lib · PDF.js (`pdfjs-dist`, legacy build for older mobile browsers) · QPDF (`@neslinesli93/qpdf-wasm`) · `@imgly/background-removal` · JSZip · next-themes · Vitest
+React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui (Radix) · pdf-lib · PDF.js (`pdfjs-dist`, legacy build for older mobile browsers) · QPDF (`@neslinesli93/qpdf-wasm`) · `@imgly/background-removal` · JSZip · next-themes · vite-plugin-pwa (Workbox) · Vitest
 
 ## Limitations
 

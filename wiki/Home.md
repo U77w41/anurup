@@ -7,6 +7,7 @@ ANURUP is a free set of photo and PDF tools for online application forms. It run
 ## Start here
 
 - [Getting started](Getting-Started) - how the app is laid out and how to move a file from one tool to the next
+- [Install as an app](Install-as-an-App) - add ANURUP to your dock or home screen and use it offline
 - [Photo and signature guides](Photo-and-Signature-Guides) - resize a photo to a KB limit, make a passport size photo, prepare a signature
 - [PDF guides](PDF-Guides) - JPG to PDF, compress a PDF to 100 KB, merge, split, sign, remove a password
 - [Workspace and chaining](Workspace-and-Chaining) - keep files between tools without downloading them

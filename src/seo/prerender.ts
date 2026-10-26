@@ -159,7 +159,8 @@ export function seoPrerender(): Plugin {
     configResolved(c) {
       config = c;
     },
-    closeBundle() {
+    // writeBundle runs before closeBundle, where vite-plugin-pwa builds the offline file list.
+    writeBundle() {
       const outDir = path.resolve(config.root, config.build.outDir);
       const indexPath = path.join(outDir, "index.html");
       if (!fs.existsSync(indexPath)) return;

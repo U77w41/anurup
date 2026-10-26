@@ -22,6 +22,9 @@ The [README](https://github.com/U77w41/anurup#project-structure) has the full fo
 - `src/lib/tools.ts` turns that into the tool registry and adds icons and suggested next steps.
 - `src/pages/tools/` has one React page per tool. Each uses `FileDropZone` for input and `ResultPanel` for output.
 - `src/seo/prerender.ts` is a Vite plugin. After the build it writes `dist/<tool-id>/index.html` for every tool, plus `sitemap.xml` and `404.html`.
+- `src/seo/pwa.ts` has the web app manifest and service worker settings used by `vite-plugin-pwa`. `src/components/PwaPrompt.tsx` shows the "new version" message and `src/lib/install.ts` powers the Install app button.
+
+The service worker is only built for production. To test install and offline use, run `npm run build && npm run preview` and open http://localhost:4173/anurup/. In Chrome DevTools, the **Application** tab shows the manifest, the service worker and an **Offline** switch.
 
 ## Add a tool
 

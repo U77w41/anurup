@@ -1,6 +1,6 @@
 # Getting started
 
-Open https://u77w41.github.io/anurup/ in Chrome, Edge, Firefox or Safari, on a computer or a phone. There is nothing to install and no account to create.
+Open https://u77w41.github.io/anurup/ in Chrome, Edge, Firefox or Safari, on a computer or a phone. Nothing needs to be installed and there is no account to create. If you use it often, you can [install it as an app](Install-as-an-App) that also works offline.
 
 ## Finding a tool
 
