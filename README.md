@@ -82,10 +82,11 @@ More step-by-step guides are in the [wiki](https://github.com/U77w41/anurup/wiki
 
 ## Privacy
 
-Workspace files are stored in the browser's IndexedDB and can be cleared from the Workspace panel. A service worker caches the app's own files so it runs offline; it never stores or sends your files. The only other network requests are:
+Workspace files are stored in the browser's IndexedDB and can be cleared from the Workspace panel. A service worker caches the app's own files so it runs offline; it never stores or sends your files. Fonts are bundled with the app. The only request to another site is for the background-removal model, which is downloaded from IMG.LY's CDN the first time you use **Remove Image Background** and cached after that.
 
-- the background-removal model, downloaded from IMG.LY's CDN the first time you use **Remove Image Background** (cached after that);
-- web fonts from Google Fonts.
+## Security
+
+The latest vulnerability scan (OpenVAS, OWASP ZAP and Nmap, 27 October 2026) found no critical or high issues. [SECURITY.md](SECURITY.md) has the full PDF reports, what each finding means for ANURUP, the dependency audit and how to report a vulnerability.
 
 ## Getting started
 
@@ -118,7 +119,7 @@ npm run dev          # http://localhost:8080
 
 Each tool has its own URL, such as `/anurup/pdf-merger/`. At build time a small Vite plugin (`src/seo/prerender.ts`) writes a static HTML page for every tool with its own title, description, canonical link, Open Graph tags, structured data and page text, so search engines and link previews see real content. React takes over once the page loads. Old `#/` links still work and are redirected.
 
-The web app manifest and service worker come from [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) with the settings in `src/seo/pwa.ts`. The service worker precaches the app shell and every tool page, and caches Google Fonts and the background-removal model the first time they load. It only exists in production builds, so test install and offline use with `npm run build && npm run preview`.
+The web app manifest and service worker come from [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) with the settings in `src/seo/pwa.ts`. The service worker precaches the app shell, every tool page and the bundled Lato font (`@fontsource/lato`), and caches the background-removal model the first time it loads. It only exists in production builds, so test install and offline use with `npm run build && npm run preview`.
 
 **Custom domain or different repo name:** change `SITE.url` in `src/seo/content.ts` and build with `BASE_PATH` set to the new path, for example `BASE_PATH=/ npm run build` for a domain root.
 
@@ -161,6 +162,7 @@ src/
     ├── signature.ts           # Signature clean-up (lighting correction + Otsu)
     └── pageRange.ts           # "1-3, 5, 8-" parsing
 public/pwa-*.png               # App icons (192, 512 and maskable 512)
+security/reports/<date>/       # Vulnerability scan reports (PDF), summarised in SECURITY.md
 wiki/                          # Source of the GitHub wiki pages
 ```
 
@@ -178,7 +180,7 @@ The home page, menus, prerendered page and sitemap pick up the new tool from the
 
 ## Tech stack
 
-React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui (Radix) · pdf-lib · PDF.js (`pdfjs-dist`, legacy build for older mobile browsers) · QPDF (`@neslinesli93/qpdf-wasm`) · `@imgly/background-removal` · JSZip · next-themes · vite-plugin-pwa (Workbox) · Vitest
+React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui (Radix) · pdf-lib · PDF.js (`pdfjs-dist`, legacy build for older mobile browsers) · QPDF (`@neslinesli93/qpdf-wasm`) · `@imgly/background-removal` · JSZip · next-themes · Lato via Fontsource · vite-plugin-pwa (Workbox) · Vitest
 
 ## Limitations
 

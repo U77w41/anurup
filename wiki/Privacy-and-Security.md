@@ -6,9 +6,10 @@ ANURUP is a static website. Every tool runs inside your browser tab using Canvas
 
 ## What the page downloads
 
-- The app itself, from GitHub Pages. A copy is kept on your device so it works offline.
-- Web fonts from Google Fonts.
+- The app itself, from GitHub Pages, fonts included. A copy is kept on your device so it works offline.
 - The background-removal model from IMG.LY's CDN, only the first time you use Remove Image Background. Your photo is processed locally after that.
+
+Nothing else is requested from other sites.
 
 ## What is stored in your browser
 
@@ -25,3 +26,9 @@ Clear the workspace when you are done, or use a private window, which deletes ev
 ## Unlocking PDFs
 
 Remove PDF Password needs the password that opens the file. It does not guess or crack passwords. Only unlock documents you own or are allowed to use.
+
+## Security scans
+
+The site was scanned on 27 October 2026 with OpenVAS, OWASP ZAP and Nmap. There were no critical or high findings. The medium and low ones are about GitHub Pages' own headers and network settings, or about other pages on the same host. [SECURITY.md](https://github.com/U77w41/anurup/blob/main/SECURITY.md) explains each finding and links the full PDF reports.
+
+To report a security problem privately, use **Report a vulnerability** on the repository's [Security tab](https://github.com/U77w41/anurup/security).

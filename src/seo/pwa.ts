@@ -43,7 +43,7 @@ export function pwaOptions(base: string): Partial<VitePWAOptions> {
       })),
     },
     workbox: {
-      // App shell, every tool page (written by the prerender plugin), the PDF.js worker and the QPDF engine.
+      // App shell, every tool page (written by the prerender plugin), the PDF.js worker, the QPDF engine and the Lato font.
       globPatterns: ["**/*.{js,mjs,css,html,svg,png,ico,wasm,woff2}"],
       // 404.html and the social preview image are not needed offline. The bundled ONNX
       // runtime (~23 MB) is not used: background removal loads its own copy (see below).
@@ -52,22 +52,8 @@ export function pwaOptions(base: string): Partial<VitePWAOptions> {
       navigateFallback: "index.html",
       navigateFallbackDenylist: [/\/[^/?]+\.[^/]+$/],
       cleanupOutdatedCaches: true,
+      // Lato is bundled with the app (its woff2 files are precached above), so the model is the only runtime cache.
       runtimeCaching: [
-        {
-          // Lato font stylesheet
-          urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-          handler: "StaleWhileRevalidate",
-          options: { cacheName: "google-fonts-stylesheets" },
-        },
-        {
-          urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-          handler: "CacheFirst",
-          options: {
-            cacheName: "google-fonts-webfonts",
-            expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
-            cacheableResponse: { statuses: [0, 200] },
-          },
-        },
         {
           // Background removal model and runtime. Downloaded on first use, then kept for offline use.
           // The URLs include the library version, so cached files never go stale.
