@@ -163,7 +163,7 @@ const PdfStamp = () => {
               <Field label="Direction & colour">
                 <div className="flex items-center gap-2">
                   <Segmented size="sm" value={wmDiagonal ? "d" : "h"} onChange={(v) => setWmDiagonal(v === "d")} options={[{ value: "d", label: "Diagonal" }, { value: "h", label: "Horizontal" }]} />
-                  <input type="color" value={wmColor} onChange={(e) => setWmColor(e.target.value)} className="h-8 w-10 cursor-pointer rounded border border-border bg-transparent" aria-label="Watermark colour" />
+                  <input type="color" value={wmColor} onChange={(e) => setWmColor(e.target.value)} className="h-8 w-10 cursor-pointer rounded border border-border bg-transparent" aria-label="Watermark colour" title="Watermark colour" />
                 </div>
               </Field>
               <Field label={`Opacity ${wmOpacity}%`}>

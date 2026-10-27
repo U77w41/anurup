@@ -17,6 +17,7 @@ import { downloadBlob, downloadZip } from "@/lib/download";
 import { formatBytes, kindOf } from "@/lib/format";
 import { rankedTargets, type ToolDef, type ToolId } from "@/lib/tools";
 import { toast } from "sonner";
+import { Tip } from "@/components/Tip";
 
 export interface ResultItem {
   blob: Blob;
@@ -62,17 +63,21 @@ function ContinueMenu({ targets, onPick, label = "More tools", compact = false }
   if (!targets.length) return null;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {compact ? (
-          <Button size="icon" variant="ghost" className="h-8 w-8" aria-label="More actions">
-            <MoreHorizontal />
-          </Button>
-        ) : (
+      {compact ? (
+        <Tip label="Open in another tool">
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="ghost" className="h-8 w-8" aria-label="Open in another tool">
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+        </Tip>
+      ) : (
+        <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm" className="gap-1">
             {label} <ChevronDown />
           </Button>
-        )}
-      </DropdownMenuTrigger>
+        </DropdownMenuTrigger>
+      )}
       <DropdownMenuContent align="end" className="max-h-80 w-60 overflow-y-auto">
         <DropdownMenuLabel className="text-xs text-muted-foreground">Open in…</DropdownMenuLabel>
         {targets.map((t) => (
@@ -208,9 +213,11 @@ function MultiResult({ toolId, items, summary, zipName }: { toolId: ToolId; item
           const targets = k === "other" ? [] : rankedTargets(k, toolId);
           return (
             <div key={`${item.name}-${i}`} className="group overflow-hidden rounded-xl border border-border bg-background">
-              <button className="block w-full" onClick={() => setPreview(item)} aria-label={`Preview ${item.name}`}>
-                <FileThumb blob={item.blob} name={item.name} fit="contain" className="aspect-[4/3] h-auto w-full rounded-none border-0" />
-              </button>
+              <Tip label="Preview">
+                <button className="block w-full" onClick={() => setPreview(item)} aria-label={`Preview ${item.name}`}>
+                  <FileThumb blob={item.blob} name={item.name} fit="contain" className="aspect-[4/3] h-auto w-full rounded-none border-0" />
+                </button>
+              </Tip>
               <div className="flex items-center gap-1 p-2">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-xs font-medium text-foreground" title={item.name}>
@@ -221,12 +228,16 @@ function MultiResult({ toolId, items, summary, zipName }: { toolId: ToolId; item
                     {item.note && ` · ${item.note}`}
                   </p>
                 </div>
-                <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setPreview(item)} aria-label="Preview">
-                  <Eye />
-                </Button>
-                <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => downloadBlob(item.blob, item.name)} aria-label="Download">
-                  <Download />
-                </Button>
+                <Tip label="Preview">
+                  <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setPreview(item)} aria-label="Preview">
+                    <Eye />
+                  </Button>
+                </Tip>
+                <Tip label={`Download ${item.name}`}>
+                  <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => downloadBlob(item.blob, item.name)} aria-label="Download">
+                    <Download />
+                  </Button>
+                </Tip>
                 <ContinueMenu targets={targets} onPick={(t) => send([item], t.id)} compact />
               </div>
             </div>

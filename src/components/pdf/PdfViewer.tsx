@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { describePdfError, openPdf, type PDFDocumentProxy } from "@/lib/pdfRender";
 import { cn } from "@/lib/utils";
+import { Tip } from "@/components/Tip";
 
 interface PdfViewerProps {
   file: Blob;
@@ -105,9 +106,11 @@ const PdfViewer = ({ file, name, className, height = "70vh", onLoaded, expandabl
     <div className={cn("overflow-hidden rounded-xl border border-border bg-card", className)}>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 bg-muted/40 px-3 py-2">
         <div className="flex items-center gap-1">
-          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => goTo(current - 1)} disabled={!doc || current <= 1} aria-label="Previous page">
-            <ChevronLeft />
-          </Button>
+          <Tip label="Previous page">
+            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => goTo(current - 1)} disabled={!doc || current <= 1} aria-label="Previous page">
+              <ChevronLeft />
+            </Button>
+          </Tip>
           <form
             className="flex items-center gap-1 text-sm text-muted-foreground"
             onSubmit={(e) => {
@@ -117,30 +120,41 @@ const PdfViewer = ({ file, name, className, height = "70vh", onLoaded, expandabl
           >
             <input
               aria-label="Page number"
+              title="Type a page number and press Enter"
               value={pageInput}
               onChange={(e) => setPageInput(e.target.value.replace(/\D/g, ""))}
               className="h-7 w-10 rounded-md border border-input bg-background text-center text-sm text-foreground"
             />
             <span>/ {sizes.length || "–"}</span>
           </form>
-          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => goTo(current + 1)} disabled={!doc || current >= sizes.length} aria-label="Next page">
-            <ChevronRight />
-          </Button>
+          <Tip label="Next page">
+            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => goTo(current + 1)} disabled={!doc || current >= sizes.length} aria-label="Next page">
+              <ChevronRight />
+            </Button>
+          </Tip>
         </div>
         <div className="flex items-center gap-1">
-          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setZoom((z) => Math.max(0.4, +(z - 0.2).toFixed(2)))} aria-label="Zoom out">
-            <ZoomOut />
-          </Button>
-          <button className="w-14 text-center text-xs font-medium text-muted-foreground hover:text-foreground" onClick={() => setZoom(1)} title="Fit width">
-            {Math.round(zoom * 100)}%
-          </button>
-          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setZoom((z) => Math.min(4, +(z + 0.2).toFixed(2)))} aria-label="Zoom in">
-            <ZoomIn />
-          </Button>
-          {expandable && (
-            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setExpanded(true)} aria-label="Open full screen" disabled={!doc}>
-              <Maximize2 />
+          <Tip label="Zoom out">
+            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setZoom((z) => Math.max(0.4, +(z - 0.2).toFixed(2)))} aria-label="Zoom out">
+              <ZoomOut />
             </Button>
+          </Tip>
+          <Tip label="Reset zoom to fit the width">
+            <button className="w-14 text-center text-xs font-medium text-muted-foreground hover:text-foreground" onClick={() => setZoom(1)} aria-label="Fit width">
+              {Math.round(zoom * 100)}%
+            </button>
+          </Tip>
+          <Tip label="Zoom in">
+            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setZoom((z) => Math.min(4, +(z + 0.2).toFixed(2)))} aria-label="Zoom in">
+              <ZoomIn />
+            </Button>
+          </Tip>
+          {expandable && (
+            <Tip label="Open full screen">
+              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setExpanded(true)} aria-label="Open full screen" disabled={!doc}>
+                <Maximize2 />
+              </Button>
+            </Tip>
           )}
         </div>
       </div>

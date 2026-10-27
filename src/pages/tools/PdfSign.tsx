@@ -18,6 +18,7 @@ import { deriveName, uid } from "@/lib/format";
 import { useWorkspace } from "@/lib/workspace";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Tip } from "@/components/Tip";
 
 interface Placed {
   id: string;
@@ -303,9 +304,11 @@ const PdfSign = () => {
               <Field label="Text">
                 <div className="flex gap-2">
                   <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Name, place, ID…" onKeyDown={(e) => e.key === "Enter" && addText(text)} />
-                  <Button size="icon" variant="outline" onClick={() => addText(text)} aria-label="Add text" disabled={!text.trim()}>
-                    <Type />
-                  </Button>
+                  <Tip label="Add this text to the page">
+                    <Button size="icon" variant="outline" onClick={() => addText(text)} aria-label="Add text" disabled={!text.trim()}>
+                      <Type />
+                    </Button>
+                  </Tip>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" className="gap-1.5" onClick={() => addText(today(dateFmt))}>
@@ -356,13 +359,17 @@ const PdfSign = () => {
             {/* Page stage */}
             <div className="space-y-2">
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Button size="icon" variant="ghost" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage((p) => p - 1)} aria-label="Previous page">
-                  <ChevronLeft />
-                </Button>
+                <Tip label="Previous page">
+                  <Button size="icon" variant="ghost" className="h-8 w-8" disabled={page <= 1} onClick={() => setPage((p) => p - 1)} aria-label="Previous page">
+                    <ChevronLeft />
+                  </Button>
+                </Tip>
                 Page {page} of {numPages}
-                <Button size="icon" variant="ghost" className="h-8 w-8" disabled={page >= numPages} onClick={() => setPage((p) => p + 1)} aria-label="Next page">
-                  <ChevronRight />
-                </Button>
+                <Tip label="Next page">
+                  <Button size="icon" variant="ghost" className="h-8 w-8" disabled={page >= numPages} onClick={() => setPage((p) => p + 1)} aria-label="Next page">
+                    <ChevronRight />
+                  </Button>
+                </Tip>
               </div>
               <div className="rounded-xl bg-muted/60 p-2 sm:p-4">
                 <div

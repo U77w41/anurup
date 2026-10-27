@@ -116,7 +116,7 @@ const BackgroundRemoval = () => {
                 </button>
               ))}
               {bgColor === "custom" && (
-                <input type="color" value={custom} onChange={(e) => setCustom(e.target.value)} className="h-10 w-12 cursor-pointer rounded border border-border bg-transparent" aria-label="Custom background colour" />
+                <input type="color" value={custom} onChange={(e) => setCustom(e.target.value)} className="h-10 w-12 cursor-pointer rounded border border-border bg-transparent" aria-label="Custom background colour" title="Custom background colour" />
               )}
             </div>
           </Field>

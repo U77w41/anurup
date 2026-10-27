@@ -41,7 +41,7 @@ const Fallback = () => (
 
 const App = () => (
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="anurup-theme" disableTransitionOnChange>
-    <TooltipProvider>
+    <TooltipProvider delayDuration={300}>
       <Toaster />
       <Sonner position="top-center" richColors closeButton />
       <PwaPrompt />

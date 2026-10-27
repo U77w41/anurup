@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
 import { HOME } from "@/seo/content";
+import { Tip } from "@/components/Tip";
 
 const SECTIONS = [
   { key: "photo", title: "Photo & Signature" },
@@ -53,9 +54,11 @@ const Index = () => {
             aria-label="Search tools"
           />
           {query && (
-            <button type="button" onClick={() => setQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Clear search">
-              <X className="h-4 w-4" />
-            </button>
+            <Tip label="Clear search">
+              <button type="button" onClick={() => setQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground" aria-label="Clear search">
+                <X className="h-4 w-4" />
+              </button>
+            </Tip>
           )}
         </div>
         <div className="mt-4 flex flex-wrap gap-2" role="tablist" aria-label="Category">

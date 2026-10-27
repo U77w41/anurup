@@ -144,6 +144,8 @@ src/
 │   ├── WorkspaceDrawer.tsx    # Shared file tray
 │   ├── ThemeToggle.tsx        # Dark mode switch, title bar colour
 │   ├── PwaPrompt.tsx          # Registers the service worker, "new version" and "works offline" messages
+│   ├── Tip.tsx                # Hover labels for links and icon buttons
+│   ├── BrandIcons.tsx         # Blog and "Support my work" icons
 │   ├── pdf/                   # PdfViewer, PdfThumbnail, PageSelectGrid
 │   └── ui/                    # shadcn/ui primitives
 ├── hooks/use-tool-io.ts       # useIncomingFiles / useSendToTool - file hand-off between tools

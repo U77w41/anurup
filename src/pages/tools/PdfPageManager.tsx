@@ -12,6 +12,7 @@ import { loadPdfDocument, pageRotation, pdfDocToBlob } from "@/lib/pdf";
 import { deriveName } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Tip } from "@/components/Tip";
 
 interface PageItem {
   key: number;
@@ -185,16 +186,17 @@ const PdfPageManager = () => {
 
 function MiniBtn({ children, label, onClick, disabled, danger }: { children: React.ReactNode; label: string; onClick: () => void; disabled?: boolean; danger?: boolean }) {
   return (
-    <button
-      type="button"
-      title={label}
-      aria-label={label}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn("rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-background disabled:opacity-30 [&_svg]:h-4 [&_svg]:w-4", danger ? "hover:text-destructive" : "hover:text-foreground")}
-    >
-      {children}
-    </button>
+    <Tip label={label}>
+      <button
+        type="button"
+        aria-label={label}
+        onClick={onClick}
+        disabled={disabled}
+        className={cn("rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-background disabled:opacity-30 [&_svg]:h-4 [&_svg]:w-4", danger ? "hover:text-destructive" : "hover:text-foreground")}
+      >
+        {children}
+      </button>
+    </Tip>
   );
 }
 

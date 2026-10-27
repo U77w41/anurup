@@ -10,6 +10,7 @@ import { useIncomingFiles } from "@/hooks/use-tool-io";
 import { inspectLock, unlockPdf, WrongPasswordError, type LockState } from "@/lib/qpdf";
 import { baseName } from "@/lib/format";
 import { toast } from "sonner";
+import { Tip } from "@/components/Tip";
 
 type Status = "idle" | "checking" | LockState | "error";
 
@@ -126,14 +127,16 @@ const PdfUnlock = () => {
                   aria-label="PDF password"
                   data-testid="pdf-password"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShow((s) => !s)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
-                  aria-label={show ? "Hide password" : "Show password"}
-                >
-                  {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
+                <Tip label={show ? "Hide password" : "Show password"}>
+                  <button
+                    type="button"
+                    onClick={() => setShow((s) => !s)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
+                    aria-label={show ? "Hide password" : "Show password"}
+                  >
+                    {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </Tip>
               </div>
             </Field>
             <ErrorNote>{error}</ErrorNote>

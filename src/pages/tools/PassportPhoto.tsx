@@ -219,7 +219,7 @@ const PassportPhoto = () => {
               <Field label="Background fill" hint="Visible where the photo doesn’t cover the frame, or behind transparent PNGs (e.g. from Background Remover).">
                 <div className="flex flex-wrap items-center gap-2">
                   <Segmented size="sm" value={bg} onChange={setBg} options={BACKGROUNDS} />
-                  {bg === "custom" && <input type="color" value={customBg} onChange={(e) => setCustomBg(e.target.value)} className="h-8 w-10 cursor-pointer rounded border border-border bg-transparent" aria-label="Custom colour" />}
+                  {bg === "custom" && <input type="color" value={customBg} onChange={(e) => setCustomBg(e.target.value)} className="h-8 w-10 cursor-pointer rounded border border-border bg-transparent" aria-label="Custom colour" title="Custom colour" />}
                 </div>
               </Field>
 

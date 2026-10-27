@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { baseName } from "@/lib/format";
+import { Tip } from "@/components/Tip";
 
 const lockCache = new WeakMap<Blob, Promise<boolean>>();
 
@@ -86,9 +87,11 @@ function LockBadge({ file, onUnlocked }: { file: File; onUnlocked: (f: File) => 
       <span className="flex shrink-0 items-center gap-1 rounded-md bg-amber-500/10 px-2 py-1 text-xs font-medium text-amber-700 dark:text-amber-400">
         <LockKeyhole className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">Protected</span>
-        <button type="button" disabled={busy} className="ml-1 underline underline-offset-2 hover:no-underline disabled:opacity-50" onClick={start}>
-          {busy && !open ? "Checking…" : "Unlock"}
-        </button>
+        <Tip label="This PDF has a password or restrictions. Click to remove them so other tools can edit it.">
+          <button type="button" disabled={busy} className="ml-1 underline underline-offset-2 hover:no-underline disabled:opacity-50" onClick={start}>
+            {busy && !open ? "Checking…" : "Unlock"}
+          </button>
+        </Tip>
       </span>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-sm">
@@ -271,21 +274,21 @@ const FileDropZone = ({
                 )}
                 <span className="shrink-0 text-xs text-muted-foreground">{formatBytes(file.size)}</span>
                 <div className="flex shrink-0 items-center">
-                  <IconBtn label="Preview" onClick={() => setPreview(file)}>
+                  <IconBtn label="Preview this file" onClick={() => setPreview(file)}>
                     <Eye className="h-4 w-4" />
                   </IconBtn>
                   {onMoveFile && (
                     <>
-                      <IconBtn label="Move up" disabled={i === 0} onClick={() => onMoveFile(i, i - 1)}>
+                      <IconBtn label="Move up in the order" disabled={i === 0} onClick={() => onMoveFile(i, i - 1)}>
                         <ArrowUp className="h-4 w-4" />
                       </IconBtn>
-                      <IconBtn label="Move down" disabled={i === files.length - 1} onClick={() => onMoveFile(i, i + 1)}>
+                      <IconBtn label="Move down in the order" disabled={i === files.length - 1} onClick={() => onMoveFile(i, i + 1)}>
                         <ArrowDown className="h-4 w-4" />
                       </IconBtn>
                     </>
                   )}
                   {onRemoveFile && (
-                    <IconBtn label="Remove" onClick={() => onRemoveFile(i)} danger>
+                    <IconBtn label="Remove this file" onClick={() => onRemoveFile(i)} danger>
                       <X className="h-4 w-4" />
                     </IconBtn>
                   )}
@@ -313,19 +316,20 @@ const FileDropZone = ({
 
 function IconBtn({ children, label, onClick, disabled, danger }: { children: React.ReactNode; label: string; onClick: () => void; disabled?: boolean; danger?: boolean }) {
   return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      disabled={disabled}
-      onClick={onClick}
-      className={cn(
-        "rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-background disabled:opacity-30",
-        danger ? "hover:text-destructive" : "hover:text-foreground",
-      )}
-    >
-      {children}
-    </button>
+    <Tip label={label}>
+      <button
+        type="button"
+        aria-label={label}
+        disabled={disabled}
+        onClick={onClick}
+        className={cn(
+          "rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-background disabled:opacity-30",
+          danger ? "hover:text-destructive" : "hover:text-foreground",
+        )}
+      >
+        {children}
+      </button>
+    </Tip>
   );
 }
 

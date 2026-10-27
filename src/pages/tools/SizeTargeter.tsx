@@ -10,6 +10,7 @@ import { useIncomingFiles } from "@/hooks/use-tool-io";
 import { createCanvas, encodeCanvas, get2d, loadImage, resizeCanvas } from "@/lib/image";
 import { deriveName, formatBytes, toPixels } from "@/lib/format";
 import { toast } from "sonner";
+import { Tip } from "@/components/Tip";
 
 type Unit = "px" | "cm" | "mm" | "in";
 type Fit = "cover" | "contain" | "stretch";
@@ -172,9 +173,11 @@ const SizeTargeter = () => {
             <Field label={`Width (${unit})`}>
               <Input type="number" min={0} step="any" value={width} onChange={(e) => onWidth(e.target.value)} placeholder="auto" />
             </Field>
-            <Button variant="ghost" size="icon" className="mb-0.5" onClick={() => setLock((l) => !l)} aria-label={lock ? "Unlock aspect ratio" : "Lock aspect ratio"} title={lock ? "Aspect ratio locked" : "Aspect ratio unlocked"}>
-              {lock ? <Link2 className="text-primary" /> : <Link2Off />}
-            </Button>
+            <Tip label={lock ? "Aspect ratio locked: changing one side updates the other. Click to unlock." : "Aspect ratio unlocked. Click to keep the proportions."}>
+              <Button variant="ghost" size="icon" className="mb-0.5" onClick={() => setLock((l) => !l)} aria-label={lock ? "Unlock aspect ratio" : "Lock aspect ratio"}>
+                {lock ? <Link2 className="text-primary" /> : <Link2Off />}
+              </Button>
+            </Tip>
             <Field label={`Height (${unit})`}>
               <Input type="number" min={0} step="any" value={height} onChange={(e) => onHeight(e.target.value)} placeholder="auto" />
             </Field>

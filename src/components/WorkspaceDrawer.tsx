@@ -18,6 +18,7 @@ import { formatBytes, kindOf } from "@/lib/format";
 import { getTool, rankedTargets } from "@/lib/tools";
 import { useWorkspace, type WorkFile } from "@/lib/workspace";
 import { cn } from "@/lib/utils";
+import { Tip } from "@/components/Tip";
 
 function timeAgo(ts: number) {
   const s = Math.round((Date.now() - ts) / 1000);
@@ -102,16 +103,20 @@ const WorkspaceDrawer = ({ open: isOpen, onOpenChange: setIsOpen }: { open: bool
                 const targets = f.kind === "other" ? [] : rankedTargets(f.kind, f.source);
                 return (
                   <li key={f.id} className={cn("flex items-center gap-2 rounded-lg border p-2 transition-colors", checked ? "border-primary bg-primary/5" : "border-transparent hover:bg-muted/60")}>
-                    <input
-                      type="checkbox"
-                      aria-label={`Select ${f.name}`}
-                      checked={checked}
-                      onChange={() => setSelected((s) => (checked ? s.filter((x) => x !== f.id) : [...s, f.id]))}
-                      className="h-4 w-4 accent-[hsl(var(--primary))]"
-                    />
-                    <button onClick={() => setPreview(f)} aria-label={`Preview ${f.name}`}>
-                      <FileThumb blob={f.blob} name={f.name} className="h-11 w-11" />
-                    </button>
+                    <Tip label="Select to send several files to one tool together">
+                      <input
+                        type="checkbox"
+                        aria-label={`Select ${f.name}`}
+                        checked={checked}
+                        onChange={() => setSelected((s) => (checked ? s.filter((x) => x !== f.id) : [...s, f.id]))}
+                        className="h-4 w-4 accent-[hsl(var(--primary))]"
+                      />
+                    </Tip>
+                    <Tip label="Preview">
+                      <button onClick={() => setPreview(f)} aria-label={`Preview ${f.name}`}>
+                        <FileThumb blob={f.blob} name={f.name} className="h-11 w-11" />
+                      </button>
+                    </Tip>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-foreground" title={f.name}>
                         {f.name}
@@ -121,11 +126,13 @@ const WorkspaceDrawer = ({ open: isOpen, onOpenChange: setIsOpen }: { open: bool
                       </p>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-muted hover:text-foreground" aria-label="File actions">
-                          <MoreHorizontal />
-                        </Button>
-                      </DropdownMenuTrigger>
+                      <Tip label="Preview, download, remove or open in another tool">
+                        <DropdownMenuTrigger asChild>
+                          <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-muted hover:text-foreground" aria-label="File actions">
+                            <MoreHorizontal />
+                          </Button>
+                        </DropdownMenuTrigger>
+                      </Tip>
                       <DropdownMenuContent align="end" className="max-h-96 w-60 overflow-y-auto">
                         <DropdownMenuItem className="gap-2" onSelect={() => setPreview(f)}>
                           <Eye className="h-4 w-4" /> Preview

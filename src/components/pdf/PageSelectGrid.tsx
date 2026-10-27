@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import PdfThumbnail from "@/components/pdf/PdfThumbnail";
 import type { PDFDocumentProxy } from "@/lib/pdfRender";
 import { cn } from "@/lib/utils";
+import { Tip } from "@/components/Tip";
 
 interface PageSelectGridProps {
   file: Blob;
@@ -36,8 +37,8 @@ const PageSelectGrid = ({ file, doc, numPages, selected, onChange }: PageSelectG
       {Array.from({ length: numPages }, (_, i) => i + 1).map((p) => {
         const on = selected.has(p);
         return (
+          <Tip key={p} label={`Page ${p}: click to ${on ? "deselect" : "select"}. Shift+click selects a range.`}>
           <button
-            key={p}
             type="button"
             onClick={(e) => click(p, e.shiftKey)}
             aria-pressed={on}
@@ -53,6 +54,7 @@ const PageSelectGrid = ({ file, doc, numPages, selected, onChange }: PageSelectG
             </span>
             <span className="absolute bottom-0 left-0 right-0 bg-black/55 py-0.5 text-center text-[11px] font-medium text-white">{p}</span>
           </button>
+          </Tip>
         );
       })}
     </div>

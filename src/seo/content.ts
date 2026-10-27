@@ -12,6 +12,8 @@ export const SITE = {
   repo: "https://github.com/U77w41/anurup",
   author: "Ujjwal Chowdhury",
   authorUrl: "https://u77w41.github.io/",
+  /** Tip jar (UPI). Linked from the sidebar, the mobile top bar and the footer. */
+  supportUrl: "https://u77w41.github.io/support-my-work/",
   ogImage: "og-image.png",
   locale: "en_IN",
 } as const;
@@ -71,7 +73,7 @@ export const HOME = {
     "Resize photos to exact KB, make passport size photos, clean signatures, and merge, compress or unlock PDFs. Free, no sign-up, and files stay in your browser.",
   h1: "Photo and PDF tools for online form uploads",
   intro:
-    "Exam, job, visa and KYC portals reject files for small reasons: the photo is 80 KB instead of 50, the signature is the wrong size, the PDF is over the limit. ANURUP fixes these in your browser. Nothing is uploaded and there is no account to create.",
+    "Exam, job, visa and KYC portals reject files for small reasons: the photo is 80 KB instead of 50, the signature is the wrong size, the PDF is over the limit. ANURUP fixes these in your browser. Nothing is uploaded and there is no account to create. The Workspace in the menu holds your files while you switch tools, so you can crop, compress and convert the same photo without downloading and re-uploading it.",
 };
 
 export const TOOL_CONTENT: ToolContent[] = [

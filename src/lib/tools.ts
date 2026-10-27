@@ -85,6 +85,13 @@ export const BADGE_CLASS: Record<ToolDef["badge"], string> = {
   Convert: "tool-badge-convert",
 };
 
+/** Hover text for the category tags. */
+export const BADGE_HINT: Record<ToolDef["badge"], string> = {
+  Photo: "Photo and image tool",
+  PDF: "PDF tool",
+  Convert: "Converts between formats",
+};
+
 export function toolHref(id: ToolId): string {
   return `/${id}`;
 }
